@@ -1,0 +1,25 @@
+name: Propose a model or data extension
+description: Suggest a useful business, economic, or environmental improvement.
+title: '[Proposal] '
+labels: [enhancement]
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: What question would this help answer?
+    validations:
+      required: true
+  - type: textarea
+    id: approach
+    attributes:
+      label: Equation, data source, and assumptions
+      description: Include primary sources, units, geography, date, and licensing if relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: How would we verify it?
+      description: Give an example and concrete acceptance checks.
+    validations:
+      required: true

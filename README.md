@@ -4,6 +4,8 @@
 
 Carbon Commons is a zero-dependency interactive lab for exploring carbon costs, emissions-reduction investments, and household rebates. It is an educational scenario tool with explicit assumptions, accessible charts, shareable scenarios, and reproducible CSV exports.
 
+[Open the live lab](https://vikrammenon09.github.io/carbon-commons/) · [Contribute](CONTRIBUTING.md) · [Review record](docs/REVIEW.md)
+
 ## What you can do
 
 - **Business lab:** enter revenue, operating costs, emissions, a carbon price, investment cost, and annual savings. Compare emissions, carbon charges, operating cash surplus, simple payback, and a five-year cumulative cash-flow illustration.
