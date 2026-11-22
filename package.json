@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node scripts/serve.mjs",
     "test": "node --test test/*.test.mjs",
-    "check": "node --check dist/app.js && node --check dist/model.js && node --check dist/business.js && node --check dist/state.js"
+    "check": "node --check dist/app.js && node --check dist/model.js && node --check dist/business.js && node --check dist/state.js && node --check scripts/serve.mjs"
   },
   "engines": { "node": ">=22" },
   "license": "MIT"

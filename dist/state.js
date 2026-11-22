@@ -5,7 +5,7 @@ export const defaults={business:BUSINESS_DEFAULTS,policy:DEFAULTS};
 export function validateInput(mode,input){
   if(!Object.hasOwn(defaults,mode)||!input||typeof input!=='object'||Array.isArray(input))throw new Error('Invalid scenario');
   const values={};
-  for(const key of Object.keys(defaults[mode])){if(typeof input[key]!=='number'||!Number.isFinite(input[key]))throw new Error('Invalid scenario');values[key]=input[key];}
+  for(const key of Object.keys(defaults[mode])){if(typeof input[key]!=='number'||!Number.isFinite(input[key]))throw new Error('Invalid scenario');values[key]=input[key]===0?0:input[key];}
   (mode==='business'?calculateBusiness:calculateScenario)(values);
   return values;
 }
