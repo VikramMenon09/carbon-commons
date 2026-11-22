@@ -59,6 +59,17 @@ test('zero revenue gives undefined margins and still represents negative cash fl
 });
 
 test('complete abatement removes the carbon charge; no abatement preserves it', () => {
+  for (const annualTonnes of [0, Number.MIN_VALUE, 1e-300, 0.07, 0.3, 1, 250, 123456.789, 1e9]) {
+    const complete = calculateBusiness({ annualTonnes, reductionPercent: 100 });
+    assert.equal(complete.avoidedTonnes, annualTonnes);
+    assert.equal(complete.remainingTonnes, 0);
+    assert.equal(complete.futureCarbonCost, 0);
+    assert.equal(complete.avoidedCarbonCost, complete.baselineCarbonCost);
+    const unchanged = calculateBusiness({ annualTonnes, reductionPercent: 0 });
+    assert.equal(unchanged.avoidedTonnes, 0);
+    assert.equal(unchanged.remainingTonnes, annualTonnes);
+    assert.equal(unchanged.futureCarbonCost, unchanged.baselineCarbonCost);
+  }
   const all = calculateBusiness({ reductionPercent: 100 });
   assert.equal(all.remainingTonnes, 0);
   assert.equal(all.avoidedTonnes, all.input.annualTonnes);
