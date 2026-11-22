@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#153c32">
+  <meta name="description" content="Explore the business case for lower emissions and the economics of carbon pricing. A transparent, open-source scenario lab.">
+  <title>Carbon Commons — Business, economics & environment</title>
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to the lab</a>
+  <header class="site-header">
+    <a class="brand" href="#business" aria-label="Carbon Commons home"><img src="./favicon.svg" width="38" height="38" alt=""><span>carbon<span class="brand-light">commons</span></span></a>
+    <nav aria-label="Main navigation">
+      <a href="#business" data-route="business">Business lab</a>
+      <a href="#policy" data-route="policy">Policy lab</a>
+      <a href="#contribute" data-route="contribute">Build together</a>
+    </nav>
+    <a class="repo-link" aria-label="View source on GitHub" href="https://github.com/VikramMenon09/carbon-commons" target="_blank" rel="noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-4.3 1.3-4.3-2.2-6-2.7m12 5v-3.4c0-1 .1-1.7-.5-2.4 3.2-.4 6.5-1.6 6.5-7.1A5.5 5.5 0 0 0 19.5 4a5 5 0 0 0-.1-4s-1.3-.4-4.4 1.5a15 15 0 0 0-8 0C3.9-.4 2.6 0 2.6 0A5 5 0 0 0 2.5 4 5.5 5.5 0 0 0 1 8.4c0 5.5 3.3 6.7 6.5 7.1-.5.6-.6 1.3-.5 2.4v3.4" transform="translate(1 1) scale(.9)"/></svg><span>View source</span></a>
+  </header>
+  <main id="main" tabindex="-1">
+    <section class="hero" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">ECONOMICS. ENVIRONMENT. ENTERPRISE.</p>
+        <h1 id="page-title">Make the <em>green</em> case.</h1>
+        <p class="hero-copy" id="hero-copy">See what lower emissions could mean for your business.<br class="desktop-break"> Explore the trade-offs. Make the assumptions your own.</p>
+      </div>
+      <div class="hero-note"><span class="small-sun" aria-hidden="true">✳</span><span>A small experiment.<br><strong>A bigger perspective.</strong></span></div>
+    </section>
+    <div id="app"></div>
+  </main>
+  <footer class="site-footer"><span>Carbon Commons <span class="footer-sep">/</span> An open-source decision lab</span><span>Illustrative scenarios. Transparent assumptions. <a href="https://github.com/VikramMenon09/carbon-commons/blob/main/docs/METHODOLOGY.md" target="_blank" rel="noreferrer">Read the methodology</a></span></footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <noscript><p class="noscript">This interactive lab requires JavaScript. The formulas and examples are also available in the GitHub repository.</p></noscript>
+</body>
+</html>
