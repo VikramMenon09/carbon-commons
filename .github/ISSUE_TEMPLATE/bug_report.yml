@@ -1,0 +1,23 @@
+name: Report a reproducible problem
+description: A calculation, export, or interface does not behave as expected.
+title: '[Bug] '
+labels: [bug]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Include the browser, lab, and steps to reproduce. Do not include private business data.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result and example inputs
+      description: Include the independently calculated result or a scenario link with hypothetical inputs.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence or screenshot

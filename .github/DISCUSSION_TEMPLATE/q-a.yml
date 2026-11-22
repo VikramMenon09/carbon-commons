@@ -1,0 +1,15 @@
+body:
+  - type: markdown
+    attributes:
+      value: Ask an actual model or project question. Use hypothetical inputs rather than private business data.
+  - type: textarea
+    id: question
+    attributes:
+      label: What are you trying to understand?
+    validations:
+      required: true
+  - type: textarea
+    id: example
+    attributes:
+      label: Example inputs or scenario link
+      description: Include what you have already tried and the relevant formula.

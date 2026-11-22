@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Model questions and answers
+    url: https://github.com/VikramMenon09/carbon-commons/discussions
+    about: Ask substantive questions about the model, assumptions, and business cases.
