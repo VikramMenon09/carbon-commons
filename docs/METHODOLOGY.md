@@ -6,13 +6,13 @@ Carbon Commons is a transparent teaching model of carbon charges and equal house
 
 Five representative households stand for five equally weighted income groups. Each represents 20% of households in this toy population. Within-group variation is omitted. The labels describe only the synthetic ordering, not measured quintile boundaries in any country.
 
-| Group | Annual income, illustrative USD | Baseline annual emissions, tonnes CO2e |
-| --- | ---: | ---: |
-| Lowest income | 25,000 | 6 |
-| Lower middle | 50,000 | 10 |
-| Middle income | 80,000 | 14 |
-| Upper middle | 130,000 | 20 |
-| Highest income | 240,000 | 30 |
+| Group          | Annual income, illustrative USD | Baseline annual emissions, tonnes CO2e |
+| -------------- | ------------------------------: | -------------------------------------: |
+| Lowest income  |                          25,000 |                                      6 |
+| Lower middle   |                          50,000 |                                     10 |
+| Middle income  |                          80,000 |                                     14 |
+| Upper middle   |                         130,000 |                                     20 |
+| Highest income |                         240,000 |                                     30 |
 
 The baseline average is 16 tonnes CO2e per household per year at 2.5 people per household. A shared household-size setting scales **every group's emissions** by `householdSize / 2.5`; incomes stay fixed. This is an illustrative scaling assumption, not a household equivalence scale. A fractional household size represents an average. The equal rebate is per household, not per person; all households use the same size setting.
 
@@ -20,17 +20,18 @@ Dollar values are illustrative USD with no calendar-year calibration, inflation 
 
 ## Inputs and equations
 
-| Input | Accepted range | Default | Meaning |
-| --- | --- | ---: | --- |
-| `carbonPrice` | 0–200 | 50 | USD charged per tonne CO2e |
-| `rebateShare` | 0–100 | 75 | Percent of collected revenue returned equally to households |
-| `response` | 0–40 | 10 | Assumed percentage reduction in emissions at a price of USD 100/t |
-| `householdSize` | 1–6 | 2.5 | Common average number of people in every representative household |
+| Input           | Accepted range | Default | Meaning                                                           |
+| --------------- | -------------- | ------: | ----------------------------------------------------------------- |
+| `carbonPrice`   | 0–200          |      50 | USD charged per tonne CO2e                                        |
+| `rebateShare`   | 0–100          |      75 | Percent of collected revenue returned equally to households       |
+| `response`      | 0–40           |      10 | Assumed percentage reduction in emissions at a price of USD 100/t |
+| `householdSize` | 1–6            |     2.5 | Common average number of people in every representative household |
 
 Let `p` be the carbon price, `s` the rebate share divided by 100, and `b_i` the size-adjusted baseline emissions of group `i`.
 
 ```text
 reductionRate = min(0.80, (response / 100) × (p / 100))
+avoidedEmissions_i = b_i × reductionRate
 afterEmissions_i = b_i × (1 − reductionRate)
 charge_i = p × afterEmissions_i
 averageCharge = sum(charge_i) / 5
@@ -72,28 +73,28 @@ There is no input-output model, demand curve, marginal abatement-cost curve, dif
 - `totals` sums exactly five representative households: `householdCount`, `baselineTonnes`, `afterTonnes`, `avoidedTonnes`, `tax`, `dividends`, `publicFunds`, `netHouseholds` and `budgetBalance`. These are not national totals. `budgetBalance` is taxes minus dividends minus public funds and should be zero within floating-point precision.
 - `scenarioToCSV(result)` returns CRLF-delimited CSV with assumptions, units and five household rows. It recomputes from validated inputs so modified output labels cannot introduce spreadsheet formulas. Numeric values use JavaScript's round-trip decimal representation, including scientific notation for very small or large values; exports do not round tiny positive values to zero. On-screen rounding does not affect calculation.
 
-Run `node --test test/model.test.mjs` from the project directory. The 14 tests cover an independently calculated default, budget balance over 180 parameter combinations, zero price, all/no rebates, response sensitivity, household-size scaling, invalid bounds, immutable baselines, neutral-transfer precision, small transfers, and faithful CSV export.
+Run `node --test test/model.test.mjs` from the project directory. Tests cover an independently calculated default, budget balance over 180 parameter combinations, zero price, all/no rebates, response sensitivity, household-size scaling, invalid bounds, immutable baselines, neutral-transfer precision, small transfers, and faithful CSV export.
 
 ## Business transition calculator
 
 The separate business calculator compares illustrative annual operating cash flows before and after a user-specified emissions-reduction investment. It does not apply the household response formula or distribute rebates. Every business number is a user input or an explicitly hypothetical default, not a verified company estimate.
 
-| Input | Accepted range | Default | Meaning |
-| --- | --- | ---: | --- |
-| `revenue` | 0–1 trillion | 1,000,000 | Annual revenue in illustrative USD |
-| `operatingCost` | 0–1 trillion | 800,000 | Annual operating costs before the carbon charge |
-| `annualTonnes` | 0–1 billion | 250 | Annual emissions in tonnes CO2e |
-| `carbonPrice` | 0–200 | 50 | Assumed USD charge per tonne CO2e |
-| `reductionPercent` | 0–100 | 30 | Assumed emissions reduction from the investment |
-| `investment` | 0–1 trillion | 50,000 | Upfront investment in USD |
-| `annualSavings` | 0–1 trillion | 12,000 | Recurring operating savings in USD per year, **excluding** avoided carbon charges |
+| Input              | Accepted range |   Default | Meaning                                                                           |
+| ------------------ | -------------- | --------: | --------------------------------------------------------------------------------- |
+| `revenue`          | 0–1 trillion   | 1,000,000 | Annual revenue in illustrative USD                                                |
+| `operatingCost`    | 0–1 trillion   |   800,000 | Annual operating costs before the carbon charge                                   |
+| `annualTonnes`     | 0–1 billion    |       250 | Annual emissions in tonnes CO2e                                                   |
+| `carbonPrice`      | 0–200          |        50 | Assumed USD charge per tonne CO2e                                                 |
+| `reductionPercent` | 0–100          |        30 | Assumed emissions reduction from the investment                                   |
+| `investment`       | 0–1 trillion   |    50,000 | Upfront investment in USD                                                         |
+| `annualSavings`    | 0–1 trillion   |    12,000 | Recurring operating savings in USD per year, **excluding** avoided carbon charges |
 
 ```text
 avoidedTonnes = annualTonnes × reductionPercent / 100
-remainingTonnes = annualTonnes − avoidedTonnes
+remainingTonnes = annualTonnes × ((100 − reductionPercent) / 100)
 baselineCarbonCost = annualTonnes × carbonPrice
 futureCarbonCost = remainingTonnes × carbonPrice
-avoidedCarbonCost = baselineCarbonCost − futureCarbonCost
+avoidedCarbonCost = avoidedTonnes × carbonPrice
 baselineProfit = revenue − operatingCost − baselineCarbonCost
 futureProfit = revenue − operatingCost + annualSavings − futureCarbonCost
 annualBenefit = annualSavings + avoidedCarbonCost
@@ -113,4 +114,10 @@ When annual benefit is zero, payback is `null` (no finite payback), even if the 
 
 `dist/business.js` exports frozen `BUSINESS_DEFAULTS`, `calculateBusiness(input = {})`, and `businessToCSV(result)`. Validation follows the household module's strict numeric convention. Results include normalized `input` and all formula names above. Margins are percentages. The CSV includes inputs, units, limitations and calculated results, and recomputes from validated inputs before export.
 
-Run `node --test test/business.test.mjs` for the 14 business tests. These check the default arithmetic, cash-flow identities, no-benefit payback, zero investment and revenue, full/no abatement, negative margins, validation boundaries, input immutability, finite ratio handling, and CSV precision/undefined states. Run `node --test test/*.test.mjs` for both model suites.
+Run `node --test test/business.test.mjs` for the business tests. These check the default arithmetic, cash-flow identities, no-benefit payback, zero investment and revenue, full/no abatement, negative margins, validation boundaries, input immutability, finite ratio handling, and CSV precision/undefined states. Run `node --test test/*.test.mjs` for both model suites.
+
+## Numerical implementation and revision
+
+Small avoided quantities are calculated directly from the reduction rate, rather than subtracting two nearly equal totals. This prevents a genuine small reduction or avoided charge from vanishing through cancellation. The zero- and full-reduction endpoints remain exact. IEEE-754 arithmetic still has finite precision: at very large baselines, the displayed or stored before/after totals can round to the same number even when the separately calculated delta is positive. Accounting identities should therefore be checked with a scale-aware tolerance, not exact equality. Values below the representable number range cannot be retained.
+
+Both CSV exports include an **App version** metadata row from the shared version constant. This identifies the calculation implementation that produced the export; it does not imply a calibrated model or a new empirical dataset. Small nonzero cash flows and percentages are displayed with extra precision or scientific notation instead of being labeled zero. Ordinary on-screen figures remain rounded; the CSV preserves JavaScript's round-trip numeric representation.

@@ -35,23 +35,28 @@ Tests exercise independently calculated examples, conservation of policy revenue
 
 ## How the project fits together
 
-| Location | Purpose |
-| --- | --- |
-| `dist/index.html`, `dist/styles.css`, `dist/app.js` | Responsive interface and charts |
-| `dist/business.js` | Business operating-cash-flow and emissions accounting |
-| `dist/model.js` | Household carbon-charge and rebate accounting |
-| `dist/state.js` | Validated browser storage and shareable scenarios |
-| `test/` | Node's built-in test suite |
-| `docs/METHODOLOGY.md` | Formulas, units, examples, and limits |
-| `scripts/serve.mjs` | Local static preview |
+| Location                                            | Purpose                                                       |
+| --------------------------------------------------- | ------------------------------------------------------------- |
+| `dist/index.html`, `dist/styles.css`, `dist/app.js` | Responsive interface and charts                               |
+| `dist/business.js`                                  | Business operating-cash-flow and emissions accounting         |
+| `dist/model.js`                                     | Household carbon-charge and rebate accounting                 |
+| `dist/state.js`                                     | Validation of stored records and shareable scenarios          |
+| `dist/workspace.js`                                 | Working scenarios, safe recovery, and browser-storage updates |
+| `dist/form.js`, `dist/format.js`                    | Draft input validation and consistent numerical presentation  |
+| `dist/version.js`                                   | Calculation release identifier included in CSV exports        |
+| `test/`                                             | Node's built-in test suite                                    |
+| `docs/METHODOLOGY.md`                               | Formulas, units, examples, and limits                         |
+| `scripts/serve.mjs`                                 | Local static preview                                          |
+
+Read [the architecture and maintenance guide](docs/ARCHITECTURE.md) for the input, model, rendering and persistence boundaries.
 
 Static hosting serves the `dist/` directory. All asset paths are relative, so the app also works beneath a repository path. The optional `.openai/hosting.json` binds the private Sites preview; forks should remove that file before creating their own Site.
 
 ## Data and privacy
 
-The app sends no scenario data to a backend and requires no account. Saved scenarios stay in the current browser. A copied scenario URL includes its input values; share it only when you intend those inputs to be visible. CSVs include the numerical assumptions. Browser storage can be cleared or unavailable, so use exports for durable copies.
+The app sends no scenario data to a backend and requires no account. Saved scenarios stay in the current browser. A copied scenario URL includes its input values; share it only when you intend those inputs to be visible. CSVs include the numerical assumptions. Browser storage can be cleared or unavailable, so use exports for durable copies. If stored data is unreadable or partly invalid, the app keeps valid records in memory and pauses automatic saving. It preserves the original stored value until you explicitly choose to replace browser data with the current session. Unrelated changes from another tab are merged before ordinary writes; simultaneous changes to the same scenario can still replace one another.
 
-The visual fonts are requested from Google Fonts; system fonts are used if that service is unavailable. No analytics or tracking scripts are included.
+The existing typefaces are served locally with the app under their upstream SIL Open Font Licenses; source URLs, hashes and licenses are in `dist/fonts/`. System fonts remain available as fallbacks. No external font requests, analytics, or tracking scripts are included.
 
 ## Development and attribution
 

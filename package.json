@@ -1,14 +1,16 @@
 {
   "name": "carbon-commons",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "An open lab connecting business decisions, environmental outcomes, and carbon-pricing economics.",
   "private": true,
   "type": "module",
   "scripts": {
     "start": "node scripts/serve.mjs",
     "test": "node --test test/*.test.mjs",
-    "check": "node --check dist/app.js && node --check dist/model.js && node --check dist/business.js && node --check dist/state.js && node --check scripts/serve.mjs"
+    "check": "node scripts/check.mjs"
   },
-  "engines": { "node": ">=22" },
+  "engines": {
+    "node": ">=22"
+  },
   "license": "MIT"
 }
